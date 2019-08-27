@@ -2,11 +2,10 @@
   <div>
     <hr>
     <div>
-      <form @submit="onRegister">
-        <input type="text" v-model="username" placeholder="Username"><br>
-        <input type="text" v-model="email" placeholder="Email"><br>
+      <form @submit="onLogin">
+        <input type="text" v-model="email" placeholder="email"><br>
         <input type="password" v-model="password" placeholder="Password"><br>
-        <input type="submit" value="Register">
+        <input type="submit" value="Login">
       </form>
     </div>
     <hr>
@@ -17,24 +16,22 @@
 import axios from "axios";
 import { mapActions } from "vuex";
 export default {
-  name: "Register",
+  name: "Login",
   data() {
     return {
-      username: "Dang Anh Vu",
       email: "conmaxau@gmail.com",
       password: "hahahahaha"
     };
   },
   methods :{
-    ...mapActions(["register"]),
-    async onRegister(e){
+    ...mapActions(["login"]),
+    onLogin(e){
       e.preventDefault();
       let userInfo = {
-        name: this.username,
         email: this.email,
         password: this.password
-      }
-      this.register(userInfo);
+      };
+      this.login(userInfo);
     }
   }
 }
