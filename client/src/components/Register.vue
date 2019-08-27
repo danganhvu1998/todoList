@@ -18,19 +18,31 @@ export default {
   name: "Register",
   data() {
     return {
-      username: "",
-      password: ""
+      username: "conmaxau@gmail.com",
+      password: "hahahahaha"
     };
   },
   methods :{
     async onRegister(e){
       e.preventDefault();
-      console.log(this.username, this.password);
-      const response = await axios.post(
+      
+      /*const response = await axios.post(
         "http://localhost:8000/api/register",
-        {"username": this.username, "password": this.password}
-      );
-      console.log(response.data);
+        {"email": this.username, "name": "Dang Vu", "password": this.password}
+      );*/
+      
+      axios.post(
+        "http://localhost:8000/api/register",{
+          "email": this.username, 
+          "name": "Dang Vu", 
+          "password": this.password
+        })
+        .then( response => {
+          console.log(response.data)
+        })
+        .catch( error => {
+          console.log(error.response.data)
+        });
     }
   }
 }
