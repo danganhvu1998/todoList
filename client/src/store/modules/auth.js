@@ -1,4 +1,7 @@
 import axios from "axios"
+import Vue from 'vue'
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
 
 const state = {
   username: "",
@@ -44,6 +47,12 @@ const actions = {
       .then( response => {
         console.log(response.data)
         commit("tokenInfo", response.data);
+        let authInfo = {
+          token_type: response.data.token_type,
+          access_token: response.data.access_token,
+          refresh_token: response.data.refresh_token,
+        };
+        $cookies.set("authInfo", authInfo, "365D" );
         dispatch("userInfo");
       })
       .catch( error => {
@@ -51,22 +60,68 @@ const actions = {
       });
   },
 
-  userInfo({commit}){
+  headerMaker(){
+    let authInfo = $cookies.get("authInfo");
+    let authToken = "";
+    if(state.access_token == ""){
+      authToken = authInfo.token_type + " " + authInfo.access_token;
+    } else {
+      authToken = state.token_type + " " + state.access_token;
+    }
     let config = {
       headers: {
         Accept: "application/json",
-        Authorization: state.token_type + " " + state.access_token
+        Authorization: authToken,
       }
     }
-    axios.get("http://localhost:8000/api/user", config)
-    .then( response => {
-      console.log("User Infomation", response.data)
-      commit("userInfo", response.data);
-    })
-    .catch( error => {
-      console.log(error.response.data.errors)
+    return config;
+  },
+
+  userInfo({commit, dispatch}){
+    dispatch("headerMaker").then(res => {
+      console.log("RES", res);
+      let config = res;
+      axios.get("http://localhost:8000/api/user", config)
+      .then( response => {
+        console.log("User Infomation", response.data)
+        commit("userInfo", response.data);
+      })
+      .catch( error => {
+        commit("userInfoDelete");
+        console.log(error);
+      });
     });
-  }
+  },
+
+  userLogout({commit, dispatch}){
+    dispatch("headerMaker").then(res => {
+      console.log("RES", res);
+      let config = res;
+      axios.post("http://localhost:8000/api/logout_current", {}, config)
+      .then( response => {
+        console.log("User Infomation", response.data)
+        commit("userInfoDelete");
+      })
+      .catch( error => {
+        console.log(error)
+      });
+    });
+  }, 
+
+  userLogoutAll({commit, dispatch}){
+    dispatch("headerMaker").then(res => {
+      console.log("RES", res);
+      let config = res;
+      axios.post("http://localhost:8000/api/logout_all", {}, config)
+      .then( response => {
+        console.log("User Infomation", response.data)
+        commit("userInfoDelete");
+      })
+      .catch( error => {
+        console.log(error)
+      });
+    });
+  }, 
 };
 
 const mutations = {
@@ -79,6 +134,14 @@ const mutations = {
   userInfo: (state, userInfo) => {
     state.username = userInfo.name;
     state.email = userInfo.email;
+  },
+
+  userInfoDelete: (state) =>{
+    state.token_type = "";
+    state.access_token = "";
+    state.refresh_token = "";
+    state.username = "";
+    state.email = "";
   }
 };
 

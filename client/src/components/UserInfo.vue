@@ -1,6 +1,9 @@
 <template>
   <div>
-    Loged In As: <b>{{username}}</b>
+    <span><button @click="userInfo()">Info Reload</button></span><br>
+    <span>Loged In As: <b>{{username}}</b></span><br>
+    <span><button @click="userLogout()">Log Out</button></span>
+    <span><button @click="userLogoutAll()">Log Out All</button></span>
   </div>
 </template>
 
@@ -9,6 +12,12 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "UserInfo",
   computed: mapGetters(["username"]),
+  methods: {
+    ...mapActions(["userInfo", "userLogout", "userLogoutAll"]),
+  },
+  created() {
+    this.userInfo();
+  }
 }
 </script>
 
