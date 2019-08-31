@@ -85,6 +85,9 @@ const actions = {
       .then( response => {
         console.log("User Infomation", response.data)
         commit("userInfo", response.data);
+        if(window.location.pathname == "/"){
+          window.location = "/todo";
+        }
       })
       .catch( error => {
         commit("userInfoDelete");
