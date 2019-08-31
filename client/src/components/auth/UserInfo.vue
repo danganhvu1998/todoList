@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span><button @click="userInfo()">Info Reload</button></span>
+    <span><button @click="userInfo(); fetchTodos()">Info Reload</button></span>
     <span><button @click="userLogout()">Log Out</button></span>
     <span><button @click="userLogoutAll()">Log Out All</button></span><br>
     <span>Loged In As: <b>{{username}}</b></span><br>
@@ -14,7 +14,7 @@ export default {
   name: "UserInfo",
   computed: mapGetters(["username"]),
   methods: {
-    ...mapActions(["userInfo", "userLogout", "userLogoutAll"]),
+    ...mapActions(["userInfo", "userLogout", "userLogoutAll", "fetchTodos"]),
   },
   created() {
     this.userInfo();
@@ -23,5 +23,5 @@ export default {
 </script>
 
 <style scoped>
-
+  
 </style>
