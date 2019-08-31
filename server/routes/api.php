@@ -25,3 +25,11 @@ Route::post("/register", "UsersController@register")->name("register");
 Route::middleware('auth:api')->post("/logout_current", "UsersController@logoutCurrent")->name("logout_current");
 
 Route::middleware('auth:api')->post("/logout_all", "UsersController@logoutAll")->name("logout_all");
+
+Route::get("/todos", "TodosController@allTodos");
+
+Route::post("/todos", "TodosController@addTodo");
+
+Route::post("/todo/delete", "TodosController@delTodo");
+
+Route::patch("/todo/{todo_id}", "TodosController@finishTodo");
