@@ -1,16 +1,18 @@
 <template>
   <div id="app">
     <UserInfo />
-    
+    <AddTodo />
   </div>
 </template>
 
 <script>
-import UserInfo from "./components/UserInfo"
+import UserInfo from "./components/auth/UserInfo"
+import AddTodo from "./components/todos/AddTodo"
 export default {
   name: 'Todo',
   components: {
     UserInfo,
+    AddTodo,
   }
 }
 </script>

@@ -60,7 +60,7 @@ const actions = {
       });
   },
 
-  headerMaker(){
+  authHeaderMaker(){
     let authInfo = $cookies.get("authInfo");
     let authToken = "";
     if(state.access_token == ""){
@@ -77,48 +77,47 @@ const actions = {
     return config;
   },
 
-  userInfo({commit, dispatch}){
-    dispatch("headerMaker").then(res => {
-      console.log("RES", res);
-      let config = res;
-      axios.get("http://localhost:8000/api/user", config)
-      .then( response => {
-        console.log("User Infomation", response.data)
-        commit("userInfo", response.data);
-        if(window.location.pathname == "/"){
-          window.location = "/todo";
-        }
-      })
-      .catch( error => {
-        commit("userInfoDelete");
-        console.log(error);
-      });
+  async userInfo({commit, dispatch}){
+    let config = await dispatch("authHeaderMaker");
+    axios.get("http://localhost:8000/api/user", config)
+    .then( response => {
+      console.log("User Infomation", response.data)
+      commit("userInfo", response.data);
+      if(window.location.pathname == "/"){
+        window.location = "/todo";
+      }
+    })
+    .catch( error => {
+      commit("userInfoDelete");
+      console.log(error);
+      if(window.location.pathname != "/"){
+        window.location = "/";
+      }
     });
   },
 
-  userLogout({commit, dispatch}){
-    dispatch("headerMaker").then(res => {
-      console.log("RES", res);
-      let config = res;
-      axios.post("http://localhost:8000/api/logout_current", {}, config)
-      .then( response => {
-        console.log("User Infomation", response.data)
-        commit("userInfoDelete");
-      })
-      .catch( error => {
-        console.log(error)
-      });
+  async userLogout({commit, dispatch}){
+    let config = await dispatch("authHeaderMaker");
+    axios.post("http://localhost:8000/api/logout_current", {}, config)
+    .then( response => {
+      console.log("User Infomation", response.data)
+      commit("userInfoDelete");
+      window.location = "/";
+    })
+    .catch( error => {
+      console.log(error)
     });
   }, 
 
   userLogoutAll({commit, dispatch}){
-    dispatch("headerMaker").then(res => {
+    dispatch("authHeaderMaker").then(res => {
       console.log("RES", res);
       let config = res;
       axios.post("http://localhost:8000/api/logout_all", {}, config)
       .then( response => {
         console.log("User Infomation", response.data)
         commit("userInfoDelete");
+        window.location = "/";
       })
       .catch( error => {
         console.log(error)

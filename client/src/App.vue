@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import Register from "./components/Register";
-import Login from "./components/Login";
-import UserInfo from "./components/UserInfo"
+import Register from "./components/auth/Register"
+import Login from "./components/auth/Login";
+import UserInfo from "./components/auth/UserInfo"
 export default {
   name: 'app',
   components: {
