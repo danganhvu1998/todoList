@@ -5,7 +5,7 @@
       <form @submit="onLogin">
         <input type="text" v-model="email" placeholder="email"><br>
         <input type="password" v-model="password" placeholder="Password"><br>
-        <input type="submit" value="Login">
+        <input type="submit" :value='$t("login")'>
       </form>
     </div>
     <hr>

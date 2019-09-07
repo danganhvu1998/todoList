@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import Todo from './Todo.vue'
 import store from './store'
+import i18n from './i18n'
 
 Vue.config.productionTip = false
 
@@ -15,6 +16,7 @@ const routes = {
 }
 
 new Vue({
+  i18n,
   store,
   el: '#app',
   data: {

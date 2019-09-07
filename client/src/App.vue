@@ -1,10 +1,9 @@
 <template>
   <div id="app">
     <UserInfo />
-    <h1>Register</h1>
     <Register />
     <br><br>
-    <h1>Login</h1>
+    <h1>{{ $t("login")}}</h1>
     <Login />
   </div>
 </template>
