@@ -6,7 +6,7 @@
     <button v-for="language in languages" v-bind:key="language.title" @click="changeLocale(language.language)">
       {{language.title}}
     </button>
-    <span>Loged In As: <b>{{username}}</b></span><br>
+    <span>{{$t("user")}}: <b>{{username}}</b></span><br>
     <hr>
   </div>
 </template>
@@ -28,6 +28,7 @@ export default {
       languages: [
         {language: "vi", title: "VI"},
         {language: "en", title: "EN"},
+        //{language: "ja", title: "JA"},
       ]
     }
   },

@@ -9,14 +9,16 @@ const messages = {
         login: "Đăng Nhập",
         infoReload: "Thông Tin",
         logout: "Đăng Xuất",
-        logoutAll: "Đăng Xuất Toàn Bộ"
+        logoutAll: "Đăng Xuất Toàn Bộ",
+        user: "Người Dùng",
     },
     "en":{
         register: "Register",
         login: "Login",
         infoReload: "Info Reload",
         logout: "Log Out",
-        logoutAll: "Log Out All"
+        logoutAll: "Log Out All",
+        user: "User",
     }
 }
 
